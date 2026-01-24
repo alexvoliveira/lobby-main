@@ -1,0 +1,5 @@
+name: lobby-main
+main: com.github.alexvoliveira.plugin.lobby.LobbyPlugin
+version: 1.0.0
+author: alexvoliveira
+depend: [ core-main ]

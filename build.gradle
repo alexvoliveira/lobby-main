@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'com.diffplug.spotless' version '6.13.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.github.alexvoliveira.plugin.lobby'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.codemc.io/repository/nms/' }
+    maven { url = uri("https://jitpack.io") }
+    maven { url = 'https://repo.extendedclip.com/releases/' }
+}
+
+dependencies {
+    compileOnly(libs.getSpigot())
+
+    annotationProcessor(libs.getLombok())
+    implementation(libs.getLombok())
+
+    implementation(libs.getInventory())
+    implementation(libs.getCommand())
+
+    implementation files("libs/npclib-api.jar")
+    implementation files("../core-main/build/libs/core-main.jar")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    archiveFileName.set("lobby-main.jar")
+    mergeServiceFiles()
+}
+
+spotless {
+    java {
+        target 'src/**/*.java', '../core-main/src/**/*.java'
+        googleJavaFormat('1.27.0')
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
