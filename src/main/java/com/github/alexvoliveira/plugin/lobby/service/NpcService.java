@@ -58,7 +58,7 @@ public final class NpcService {
                 NpcConfig.builder()
                         .name("events")
                         .displayLines(Arrays.asList("§b§lEVENTOS", "§7Clique para entrar."))
-                        .skin(SkinsNpcEnums.BEDWARS.skin())
+                        .skin(SkinsNpcEnums.EVENTS.skin())
                         .handItem(Material.NETHER_STAR)
                         .location(createLocation(-139.500, 65, 253.500))
                         .build()

@@ -51,7 +51,6 @@ public final class LobbyPlugin extends JavaPlugin {
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao criar o §a§lNPC: §c" + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     private void loadListeners() {
