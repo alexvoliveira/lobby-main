@@ -10,6 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
+@SuppressWarnings("UnstableApiUsage")
 public final class LobbyPlugin extends JavaPlugin {
 
     private NpcService npcService;
@@ -49,7 +50,7 @@ public final class LobbyPlugin extends JavaPlugin {
         } catch (Exception e) {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao criar o §a§lNPC: §c" + e.getMessage());
-            e.printStackTrace();
+            getLogger().severe("Erro ao criar NPC: " + e.getMessage());
         }
     }
 
@@ -62,10 +63,8 @@ public final class LobbyPlugin extends JavaPlugin {
         } catch (Exception e) {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao §aregistrar §7a listener: §c" + e.getMessage());
-            e.printStackTrace();
-            return;
+            getLogger().severe("Erro ao registrar listeners: " + e.getMessage());
         }
-
     }
 
     private void loadItem() {
@@ -74,8 +73,7 @@ public final class LobbyPlugin extends JavaPlugin {
         } catch (Exception e) {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao §ainiciar a §ahotbar: §c" + e.getMessage());
-            e.printStackTrace();
-            return;
+            getLogger().severe("Erro ao iniciar hotbar: " + e.getMessage());
         }
     }
 }
