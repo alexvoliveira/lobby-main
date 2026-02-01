@@ -2,10 +2,10 @@
   <img src="https://img.shields.io/static/v1?label=Project&message=lobby-main&color=1f1f1f&style=for-the-badge&logo=Github" alt="lobby-main">
 </p>
 
-<h1 align="center">Lobby Main (INCOMPLETO)</h1>
+<h1 align="center">Lobby Main</h1>
 
 <p align="center">
-  Plugin Spigot 1.8.8 para gerenciamento de lobby com NPCs, hotbar customizada e eventos de jogadores.
+  Plugin Spigot 1.8.8 para gerenciamento de lobby com NPCs interativos, hotbar customizada e eventos de jogadores.
 </p>
 
 <p align="center">
@@ -30,8 +30,6 @@
 | Biblioteca | Versão | Descrição |
 |------------|--------|-----------|
 | `core-main` | 1.0 | Plugin core com utilitários base |
-| `inventory-api` | 2.0.3 | Gerenciamento de inventários (HenryFabio) |
-| `command-framework` | 1.3.1 | Sistema de comandos (SaiintBrisson) |
 
 ## Estrutura
 
@@ -39,6 +37,8 @@
 src/main/java/com/github/alexvoliveira/plugin/lobby/
 ├── LobbyPlugin.java                    # classe principal
 ├── listener/
+│   ├── hotbar/
+│   │   └── HotbarListener.java         # eventos de interação com itens da hotbar
 │   ├── npc/
 │   │   └── NpcListener.java            # eventos de interação com NPCs
 │   └── player/
@@ -58,31 +58,55 @@ src/main/java/com/github/alexvoliveira/plugin/lobby/
 ### Sistema de NPCs
 - Criação automática de NPCs no spawn do lobby
 - NPCs configuráveis com:
-    - Texto display customizado (linha 1 e linha 2)
-    - Skins personalizadas
-    - Item na mão (main hand)
-    - Localização específica
+  - Texto display customizado (2 linhas)
+  - Skins personalizadas (via SkinsNpcEnums do core-main)
+  - Item na mão (main hand)
+  - Localização específica (hardcoded)
+
 - NPCs pré-configurados:
-    - **SKYWARS** - Eye of Ender na mão
-    - **BEDWARS** - Bed na mão
-    - **EVENTOS** - Nether Star na mão
+  - **SKYWARS** (Eye of Ender) - coordenadas: -137.500, 65, 253.500
+  - **BEDWARS** (Bed) - coordenadas: -135.500, 65, 253.500
+  - **EVENTOS** (Nether Star) - coordenadas: -139.500, 65, 253.500
+
+- Interações:
+  - SKYWARS: mensagem "Servidor em manutenção"
+  - BEDWARS: mensagem "Servidor em manutenção"
 
 ### Hotbar Customizada
-- Sistema automático de itens na hotbar ao entrar no servidor
+- Sistema automático de aplicação ao entrar no servidor
 - Itens incluídos:
-    - Skull do jogador (slot 2) - "Sua Conta"
-    - Compass (slot 6) - "Mode de Jogo"
+  - **Skull do jogador** (slot 2) - "Sua Conta."
+    - Abre AccountView ao clicar
+  - **Compass** (slot 6) - "Mode de Jogo"
+    - Abre ServerView ao clicar
 - Limpeza automática ao sair
+
+### HotbarListener
+- Detecta cliques em itens da hotbar
+- Redireciona para views correspondentes:
+  - SKULL_ITEM → AccountView
+  - COMPASS → ServerView
 
 ### Sistema de Mensagens
 - Mensagens de entrada/saída personalizadas
-- Integração com LuckPerms via PlaceholderAPI
-- Sistema de permissões para exibição de mensagens (`lobby.event.permission.traffic`)
+- Integração com LuckPerms via PlaceholderAPI (suffix)
+- Sistema de permissões:
+  - `lobby.event.permission.traffic` - Exibe mensagens de join/quit do jogador
+  - Sem permissão: mensagens são ocultadas (setJoinMessage/setQuitMessage null)
 
 ### Eventos
-- Join: aplica hotbar, mostra NPCs, mensagem customizada
-- Quit: limpa hotbar, mensagem customizada
-- NPC Interact: ações específicas por NPC
+- **PlayerJoinEvent**:
+  - Aplica hotbar customizada
+  - Mostra todos os NPCs
+  - Mensagem de entrada com cargo
+
+- **PlayerQuitEvent**:
+  - Limpa hotbar
+  - Mensagem de saída com cargo
+
+- **NPCInteractEvent**:
+  - Verifica qual NPC foi clicado
+  - Executa ação correspondente
 
 ## Build
 
@@ -95,10 +119,13 @@ Gera `lobby-main.jar` em `build/libs/`.
 ## Instalação
 
 1. Compile e instale o `core-main.jar` primeiro
-2. Coloque `core-main.jar` em `plugins/`
-3. Coloque `lobby-main.jar` em `plugins/`
-5. Configure o mundo como "world" (ou ajuste no código)
-6. Reinicie o servidor
+2. Coloque `NPCLibPlugin.jar` em `plugins/`
+3. Coloque `PlaceholderAPI.jar` em `plugins/`
+4. Coloque `LuckPerms.jar` em `plugins/` (opcional, para suffix)
+5. Coloque `core-main.jar` em `plugins/`
+6. Coloque `lobby-main.jar` em `plugins/`
+7. Configure o mundo como "world" (ou ajuste em `NpcService.createLocation()`)
+8. Reinicie o servidor
 
 ## Configuração
 
@@ -110,6 +137,11 @@ As coordenadas estão hardcoded em `NpcService.loadNPCsFromConfig()`:
 
 ### Permissões
 - `lobby.event.permission.traffic` - Exibe mensagens de join/quit do jogador
+
+### Dependências (plugin.yml)
+```yaml
+depend: [ core-main ]
+```
 
 ---
 
