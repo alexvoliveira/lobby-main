@@ -1,5 +1,6 @@
 package com.github.alexvoliveira.plugin.lobby;
 
+import com.github.alexvoliveira.plugin.lobby.listener.hotbar.HotbarListener;
 import com.github.alexvoliveira.plugin.lobby.listener.npc.NpcListener;
 import com.github.alexvoliveira.plugin.lobby.listener.player.PlayerListener;
 import com.github.alexvoliveira.plugin.lobby.provider.hotbar.HotbarProvider;
@@ -60,6 +61,7 @@ public final class LobbyPlugin extends JavaPlugin {
         try {
             pm.registerEvents(new NpcListener(this), this);
             pm.registerEvents(new PlayerListener(this), this);
+            pm.registerEvents(new HotbarListener(), this);
         } catch (Exception e) {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao §aregistrar §7a listener: §c" + e.getMessage());
