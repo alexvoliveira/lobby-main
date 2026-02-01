@@ -25,12 +25,12 @@ public final class NpcListener implements Listener {
         NPC click = event.getNPC();
 
         if (click.getText().get(0).contains("SKYWARS")) {
-            event.getWhoClicked().sendMessage("SkyWars");
+            event.getWhoClicked().sendMessage("§c➜ Erro: §fServidor em §amanutenção.");
             return;
         }
 
         if (click.getText().get(0).contains("BEDWARS")) {
-            event.getWhoClicked().sendMessage("§aError: §7Servidor em manutenção.");
+            event.getWhoClicked().sendMessage("§c➜ Erro: §fServidor em §amanutenção.");
         }
     }
 }
