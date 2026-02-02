@@ -53,6 +53,7 @@ public final class LobbyPlugin extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao criar o §a§lNPC: §c" + e.getMessage());
             getLogger().severe("Erro ao criar NPC: " + e.getMessage());
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
@@ -68,6 +69,7 @@ public final class LobbyPlugin extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao §aregistrar §7a listener: §c" + e.getMessage());
             getLogger().severe("Erro ao registrar listeners: " + e.getMessage());
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
@@ -78,6 +80,7 @@ public final class LobbyPlugin extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(
                     "§4§lLOBBY SPIGOT ➜ §7Houve um §cproblema §7ao §ainiciar a §ahotbar: §c" + e.getMessage());
             getLogger().severe("Erro ao iniciar hotbar: " + e.getMessage());
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 }
