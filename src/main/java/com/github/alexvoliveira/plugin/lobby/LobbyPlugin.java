@@ -22,6 +22,12 @@ public final class LobbyPlugin extends JavaPlugin {
     public void onEnable() {
         final Stopwatch stopwatch = Stopwatch.createStarted();
 
+        if (!validateDependencies()) {
+            getLogger().severe("§c➜ Desabilitando plugin devido o core ausentes.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         loadNpcs();
         loadListeners();
         loadItem();
@@ -42,6 +48,17 @@ public final class LobbyPlugin extends JavaPlugin {
         stopwatch.stop();
         getServer().getConsoleSender().sendMessage(
                 "§4§lLOBBY SPIGOT ➜ §7Plugin §cdesligado §7com §asucesso! §7Em: §a" + stopwatch);
+    }
+
+    private boolean validateDependencies() {
+        boolean core = getServer().getPluginManager().getPlugin("core-main") != null;
+
+        if (!core) {
+            getLogger().severe("Core não encontrado!");
+            return false;
+        }
+
+        return true;
     }
 
     private void loadNpcs() {
