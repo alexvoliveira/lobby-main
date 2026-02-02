@@ -19,7 +19,7 @@ public final class HotbarProvider {
                         .slot(2),
 
                 new ItemFactory(Material.COMPASS)
-                        .name("§aMode de Jogo")
+                        .name("§aModo de Jogo")
                         .lore("§7Clique para abrir.")
                         .slot(6)
         );
